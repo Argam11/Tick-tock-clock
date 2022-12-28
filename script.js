@@ -1,3 +1,6 @@
+const piano = Synth.createInstrument("piano");
+let interval;
+
 const line1 = document.querySelector(".line-1");
 const line2 = document.querySelector(".line-2");
 const line3 = document.querySelector(".line-3");
@@ -15,73 +18,74 @@ const line14 = document.querySelector(".line-14");
 const line15 = document.querySelector(".line-15");
 const line16 = document.querySelector(".line-16");
 
-const obj1 = { line: line1, deg: 0, speed: 0.1 };
-const obj2 = { line: line2, deg: 0, speed: 0.2 };
-const obj3 = { line: line3, deg: 0, speed: 0.3 };
-const obj4 = { line: line4, deg: 0, speed: 0.4 };
-const obj5 = { line: line5, deg: 0, speed: 0.5 };
-const obj6 = { line: line6, deg: 0, speed: 0.6 };
-const obj7 = { line: line7, deg: 0, speed: 0.7 };
-const obj8 = { line: line8, deg: 0, speed: 0.8 };
-const obj9 = { line: line9, deg: 0, speed: 0.9 };
-const obj10 = { line: line10, deg: 0, speed: 1 };
-const obj11 = { line: line11, deg: 0, speed: 1.1 };
-const obj12 = { line: line12, deg: 0, speed: 1.2 };
-const obj13 = { line: line13, deg: 0, speed: 1.3 };
-const obj14 = { line: line14, deg: 0, speed: 1.4 };
-const obj15 = { line: line15, deg: 0, speed: 1.5 };
-const obj16 = { line: line16, deg: 0, speed: 1.6 };
+const initialData = [
+  { line: line1, deg: 0, speed: 0.1, audio: ["C", 3, 2] },
+  { line: line2, deg: 0, speed: 0.2, audio: ["D", 3, 2] },
+  { line: line3, deg: 0, speed: 0.3, audio: ["E", 3, 2] },
+  { line: line4, deg: 0, speed: 0.4, audio: ["F", 3, 2] },
+  { line: line5, deg: 0, speed: 0.5, audio: ["G", 3, 2] },
+  { line: line6, deg: 0, speed: 0.6, audio: ["A", 3, 2] },
+  { line: line7, deg: 0, speed: 0.7, audio: ["B", 3, 2] },
+  { line: line8, deg: 0, speed: 0.8, audio: ["C", 4, 2] },
+  { line: line9, deg: 0, speed: 0.9, audio: ["D", 4, 2] },
+  { line: line10, deg: 0, speed: 1, audio: ["E", 4, 2] },
+  { line: line11, deg: 0, speed: 1.1, audio: ["F", 4, 2] },
+  { line: line12, deg: 0, speed: 1.2, audio: ["G", 4, 2] },
+  { line: line13, deg: 0, speed: 1.3, audio: ["A", 4, 2] },
+  { line: line14, deg: 0, speed: 1.4, audio: ["B", 4, 2] },
+  { line: line15, deg: 0, speed: 1.5, audio: ["C", 5, 2] },
+  { line: line16, deg: 0, speed: 1.6, audio: ["D", 5, 2] },
+];
 
-function func({ line, deg, speed }) {
+function func({ line, deg, speed, audio }) {
   return function () {
+    line.style.transform = `rotate(${deg}deg) translateX(-50%)`;
     deg = Math.round((deg + speed) * 10) / 10;
 
-    line.style.transform = `rotate(${deg}deg) translateX(-50%)`;
-
-    const currentDegree = Number(line.style.transform.match(/([0-9]*[.])?[0-9]+/)[0]);
     if (deg >= 360) {
       deg = 720 - deg;
       speed *= -1;
+      piano.play(...audio);
+      setAlphe(line)
     }
     if (deg <= 0) {
       deg = Math.abs(deg);
       speed *= -1;
+      piano.play(...audio);
+      setAlphe(line);
     }
+
+    return deg;
   };
 }
 
-const f1 = func(obj1);
-const f2 = func(obj2);
-const f3 = func(obj3);
-const f4 = func(obj4);
-const f5 = func(obj5);
-const f6 = func(obj6);
-const f7 = func(obj7);
-const f8 = func(obj8);
-const f9 = func(obj9);
-const f10 = func(obj10);
-const f11 = func(obj11);
-const f12 = func(obj12);
-const f13 = func(obj13);
-const f14 = func(obj14);
-const f15 = func(obj15);
-const f16 = func(obj16);
+function runFunc() {
+  return initialData.map((obj) => func(obj));
+}
 
-setInterval(() => {
-  f1();
-  f2();
-  f3();
-  f4();
-  f5();
-  f6();
-  f7();
-  f8();
-  f9();
-  f10();
-  f11();
-  f12();
-  f13();
-  f14();
-  f15();
-  f16();
-}, 5);
+let funcList = runFunc();
+
+function play() {
+  if (interval) clearInterval(interval);
+  interval = setInterval(() => {
+    funcList.forEach((f) => f());
+  }, 5);
+}
+
+function stop() {
+  if (interval) clearInterval(interval);
+}
+
+function reset() {
+  if (interval) clearInterval(interval);
+  funcList = runFunc();
+  funcList.forEach((f) => f());
+}
+
+function setAlphe(el) {
+  const bgColor = getComputedStyle(el).backgroundColor;
+  el.style.backgroundColor = bgColor.split(")").concat([", 0.3)"]).join("");
+  setTimeout(() => {
+    el.style.backgroundColor = bgColor;
+  }, 100);
+}

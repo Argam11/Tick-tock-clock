@@ -6,30 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tick Tock Clock</title>
     <link rel="stylesheet" href="./style.css" />
+    <script src="./audiosynth.js"></script>
   </head>
   <body>
     <main class="main">
       <div class="main-circle">
         <div class="main-line"></div>
-        <div class="line line-1" style="transform: rotate(118.6deg) translateX(-50%)"></div>
-        <div class="line line-2" style="transform: rotate(238deg) translateX(-50%)"></div>
-        <div class="line line-3" style="transform: rotate(358.2deg) translateX(-50%)"></div>
-        <div class="line line-4" style="transform: rotate(240.8deg) translateX(-50%)"></div>
-        <div class="line line-5" style="transform: rotate(119deg) translateX(-50%)"></div>
-        <div class="line line-6" style="transform: rotate(4.8deg) translateX(-50%)"></div>
-        <div class="line line-7" style="transform: rotate(113.4deg) translateX(-50%)"></div>
-        <div class="line line-8" style="transform: rotate(252.8deg) translateX(-50%)"></div>
-        <div class="line line-9" style="transform: rotate(342deg) translateX(-50%)"></div>
-        <div class="line line-10" style="transform: rotate(216deg) translateX(-50%)"></div>
-        <div class="line line-11" style="transform: rotate(127.6deg) translateX(-50%)"></div>
-        <div class="line line-12" style="transform: rotate(40.8deg) translateX(-50%)"></div>
-        <div class="line line-13" style="transform: rotate(163.8deg) translateX(-50%)"></div>
-        <div class="line line-14" style="transform: rotate(226.8deg) translateX(-50%)"></div>
-        <div class="line line-15" style="transform: rotate(291deg) translateX(-50%)"></div>
-        <div class="line line-16" style="transform: rotate(160deg) translateX(-50%)"></div>
+        <div class="line line-1 aaa"></div>
+        <div class="line line-2"></div>
+        <div class="line line-3"></div>
+        <div class="line line-4"></div>
+        <div class="line line-5"></div>
+        <div class="line line-6"></div>
+        <div class="line line-7"></div>
+        <div class="line line-8"></div>
+        <div class="line line-9"></div>
+        <div class="line line-10"></div>
+        <div class="line line-11"></div>
+        <div class="line line-12"></div>
+        <div class="line line-13"></div>
+        <div class="line line-14"></div>
+        <div class="line line-15"></div>
+        <div class="line line-16"></div>
+      </div>
+      <div class="actions">
+        <button onclick="play()" class="button">Play</button>
+        <button onclick="stop()" class="button">Stop</button>
+        <button onclick="reset()" class="button">Reset</button>
       </div>
     </main>
-
     <script src="./script.js"></script>
   </body>
 </html>
