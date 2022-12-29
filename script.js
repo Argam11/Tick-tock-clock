@@ -65,15 +65,17 @@ function runFunc() {
 
 let funcList = runFunc();
 
-function play() {
+function play(el) {
   if (interval) clearInterval(interval);
-  interval = setInterval(() => {
-    funcList.forEach((f) => f());
-  }, 5);
-}
 
-function stop() {
-  if (interval) clearInterval(interval);
+  if(el.innerText === "Play") {
+    interval = setInterval(() => {
+      funcList.forEach((f) => f());
+    }, 5);
+    el.innerText = "Stop";
+  } else {
+    el.innerText = "Play";
+  }
 }
 
 function reset() {
