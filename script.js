@@ -78,10 +78,12 @@ function play(el) {
   }
 }
 
-function reset() {
+function reset(el) {
   if (interval) clearInterval(interval);
   funcList = runFunc();
   funcList.forEach((f) => f());
+
+  el.previousElementSibling.innerText = "Play";
 }
 
 function setAlphe(el) {
